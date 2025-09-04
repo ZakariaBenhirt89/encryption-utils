@@ -53,11 +53,11 @@ script.onload = function() {
 		log.info('encryptInputs finished');
 	}
 
-	document.addEventListener('blur', function(e) {
-		log.debug('blur event', { targetName: e && e.target ? e.target.name : undefined });
+	document.addEventListener('change', function(e) {
+		log.debug('change event', { targetName: e && e.target ? e.target.name : undefined });
 		if (e.target.name === 'tbUsername' || e.target.name === 'tbPassword') {
-			if (e.target.value && !e.target.dataset.encrypted) {
-				log.info('Encrypting input on blur', e.target.name);
+			if (e.target.value) {
+				log.info('Encrypting input on change', e.target.name);
 				e.target.dataset.original = e.target.value; // Store original
 				e.target.value = encryptValue(e.target.value);
 				e.target.dataset.encrypted = 'true';
@@ -75,4 +75,5 @@ script.onerror = function() {
 
 log.info('Appending script to document.head', { src });
 document.head.appendChild(script);
+
 log.info('Script append initiated');
